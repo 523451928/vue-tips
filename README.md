@@ -31,7 +31,8 @@ this.$alert.warning('参数错误','确认',function(){
 
 ```
 this.$prompt('请输入姓名',function(val){
-    this.$alert('success',val)
+  //val的值是input里面输入的值
+  //todo
 })
 ```
 
