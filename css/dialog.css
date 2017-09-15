@@ -6,16 +6,7 @@
  .layer #cancel{width: 49%; text-align: center;height: 0.98rem; display:inline-block; line-height:0.98rem; color:#FF6633; float: left;}
  .layer #sure{width: 49%; text-align: center;height: 0.98rem; display:inline-block; line-height:0.98rem; color:#3377cc;border-left:1px solid #bcbcbc; float: left;}
 
-.lx-dialog{
-    position: fixed;
-    bottom:100px;
-    left:50%;
-    min-width:180px;
-    height:40px;
-    line-height: 40px;
-    padding:0 10px;
-    margin-left: -100px;
-    text-align: center;
+.lx-dialog{  position: fixed;  bottom:100px;  left:50%;  min-width:180px;  height:40px;  line-height: 40px;  padding:0 10px;  margin-left: -100px;  text-align: center;
     z-index:9999;
     font-size:14px;
     color: #fff;
@@ -303,6 +294,17 @@
      border-radius: 4px;
      color: #666666;
  }
+ .lx-prompt-wrapper .confirm-box{
+     height: 120px;
+ }
+ .lx-prompt-wrapper .confirm-box div{
+     border-bottom: 1px solid #ccc;  margin: 0;
+ }
+ .lx-prompt-wrapper .confirm-box input{
+     height: 16px;
+     margin: 0 auto 10px auto;
+     display: block;
+ }
  @keyframes show-confirm
  {
      from {
@@ -316,50 +318,21 @@
          -webkit-transform: scale(1);
      }
  }
- .lx-confirm-wrapper .confirm-box p{
-     line-height: 62px;
-     text-align: center;
-     font-size: 18px;
-     border-bottom: 1px solid #ccc;
-     margin: 0;
+ .lx-confirm-wrapper .confirm-box p{  line-height: 62px;  text-align: center;  font-size: 18px;
+     border-bottom: 1px solid #ccc;  margin: 0;
  }
- .lx-confirm-wrapper .btn-wrapper span{
-     display: inline-block;
-     width: 49%;
-     text-align: center;
-     height: 37px;
-     line-height: 37px;
+ .lx-prompt-wrapper .confirm-box p{
+     border: none;
+     line-height: 50px;
  }
- .lx-confirm-wrapper .btn-wrapper .confirm{
-     color: #4caf50;
- }
- .lx-confirm-wrapper .btn-wrapper .alert-confirm{
-     display: inline-block;
-     width: 100%;
-     text-align: center;
-     height: 37px;
-     line-height: 37px;
-     color:  #50bfff;
- }
- .lx-confirm-wrapper .btn-wrapper .success-confirm{
-     color: #4caf50;
- }
- .lx-confirm-wrapper .btn-wrapper .error-confirm{
-     color: #ff6633;
- }
- .lx-confirm-wrapper .btn-wrapper .warning-confirm{
-     color: #f7ba2a;
- }
- .lx-confirm-wrapper .btn-wrapper .cancel{
-     border-right: 1px solid #ccc;
-     color: #ff6633;
- }
- .lx-confirm-wrapper .scale-enter-active,.scale-leave-active,.confirm-box{
-     transition: all 0.5s;
- }
- .lx-confirm-wrapper .scale-enter,.scale-leave-to{
-     opacity: 0;
- }
- .lx-confirm-wrapper .scale-enter .confirm-box,.scale-leave-to .confirm-box{
-     transform: scale(.5);
- }
+ .lx-confirm-wrapper .confirm-box .btn-wrapper{ border: 0;}
+ .lx-confirm-wrapper .btn-wrapper span{  display: inline-block;  width: 49%;  text-align: center;  height: 37px;  line-height: 37px;  }
+ .lx-confirm-wrapper .btn-wrapper .confirm{  color: #4caf50; }
+ .lx-confirm-wrapper .btn-wrapper .alert-confirm{  display: inline-block;  width: 100%;  text-align: center;  height: 37px;  line-height: 37px;  color:  #50bfff;  }
+ .lx-confirm-wrapper .btn-wrapper .success-confirm{  color: #4caf50;  }
+ .lx-confirm-wrapper .btn-wrapper .error-confirm{  color: #ff6633;  }
+ .lx-confirm-wrapper .btn-wrapper .warning-confirm{  color: #f7ba2a;  }
+ .lx-confirm-wrapper .btn-wrapper .cancel{  border-right: 1px solid #ccc;  color: #ff6633;  }
+ .lx-confirm-wrapper .scale-enter-active,.scale-leave-active,.confirm-box{  transition: all 0.5s;  }
+ .lx-confirm-wrapper .scale-enter,.scale-leave-to{  opacity: 0;  }
+ .lx-confirm-wrapper .scale-enter .confirm-box,.scale-leave-to .confirm-box{  transform: scale(.5);  }
