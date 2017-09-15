@@ -82,11 +82,11 @@ Tips.install = function (Vue, options) {
                 confirmFn(){
                     if(typeof callback=="function"){
                         callback.apply(self)
-                        this.$refs.wrapper.style.opacity=0;
-                        setTimeout(()=>{
-                            document.body.removeChild(this.$refs.wrapper);
-                        },500)
                     }
+                    this.$refs.wrapper.style.opacity=0;
+                    setTimeout(()=>{
+                        document.body.removeChild(this.$refs.wrapper);
+                    },500)
                 }
             }
         })
@@ -99,6 +99,51 @@ Tips.install = function (Vue, options) {
             return Vue.prototype.$alert(type,title,btnText,callback);
         };
     });
+
+    Vue.prototype.$prompt=function(title,cancelCallback){
+        var self=this;
+        if(!title){
+            title="请确认"
+        }
+        var promptTpl=Vue.extend({
+            template:`<div class="lx-confirm-wrapper lx-prompt-wrapper" ref="wrapper">
+                <div class="confirm-box">
+                    <div>
+                        <p>{{title}}</p>
+                        <input type="text" v-model="val">
+                    </div>
+                    <div class="btn-wrapper">
+                        <span class="cancel" @click="cancelFn">取消</span>
+                        <span class="confirm" @click="confirmFn">确认</span>
+                     </div>
+                </div>
+            </div>`,
+            data:function(){
+                return{
+                    title:title,
+                    val:""
+                }
+            },
+            methods:{
+                cancelFn(){
+                    this.$refs.wrapper.style.opacity=0;
+                    setTimeout(()=>{
+                        document.body.removeChild(this.$refs.wrapper);
+                    },500)
+                },
+                confirmFn(){
+                    this.cancelFn();
+                    if(typeof cancelCallback=="function"){
+                        cancelCallback.call(self,this.val);
+                    }else{
+                        console.warn('参数错误')
+                    }
+                }
+            }
+        })
+        var tpl = new promptTpl().$mount().$el;
+        document.body.appendChild(tpl);
+    }
 
     Vue.prototype.$comfirm=function(title,cancelCallback){
         var self=this;
