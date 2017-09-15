@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue-tips</title>
+    <link rel="stylesheet" href="css/dialog.css">
+    <script src="js/vue.min.js"></script>
+    <script src="js/vue-tips.js"></script>
+    <style>
+        .btn{
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+            color: #666;
+        }
+        .load{
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="toast btn" @click="showToast">toast</div>
+    <div class="load btn" @click="loadFn">loading</div>
+    <div class="load btn" @click="comfirmFn">comfirm</div>
+    <div class="load btn" @click="showAlert">alert</div>
+</div>
+<script>
+    Vue.use(Tips)
+    new Vue({
+        el:"#app",
+        data:{
+            msg:"hello world"
+        },
+        methods:{
+            showToast(){
+               var pro= this.$toast.center('我是提示框',3000,function(){
+                   console.log(this)
+               },{
+                    background:"#f63"
+               }).then((res)=>{
+                   console.log(res)
+               })
+            },
+            comfirmFn(){
+                this.$comfirm('确认删除吗？',function(){
+                    console.log(this)
+                })
+            },
+            showAlert(){
+                var self=this
+                this.$alert.warning('参数错误','确认',function(){
+                    console.log(this)
+                    console.log(self)
+                })
+            },
+            loadFn(){
+                this.$loading('加载中...')
+                setTimeout(()=>{
+                    this.$loading.close().then((res)=>{
+                        console.log(res)
+                    })
+                },3000)
+            }
+        }
+    })
+</script>
+</body>
+</html>
