@@ -28,6 +28,7 @@
     <div class="load btn" @click="loadFn">loading</div>
     <div class="load btn" @click="comfirmFn">comfirm</div>
     <div class="load btn" @click="showAlert">alert</div>
+    <div class="load btn" @click="promptFn">prompt</div>
 </div>
 <script>
     Vue.use(Tips)
@@ -51,10 +52,14 @@
                     console.log(this)
                 })
             },
+            promptFn(){
+                this.$prompt('请输入姓名',function(val){
+                    this.$alert('success',val)
+                })
+            },
             showAlert(){
                 var self=this
                 this.$alert.warning('参数错误','确认',function(){
-                    console.log(this)
                     console.log(self)
                 })
             },
