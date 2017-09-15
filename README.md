@@ -4,7 +4,7 @@
 * 1、直接引用vue-tips.js和css,入口文件加上Vue使用插件的api,Vue.use(Tips)
 * 2、在使用vue-cli的项目中使用vue-tips需要在vue-tips.js使用export default Tips 导出Tips,最后在入口js中import Tips from 'vue-tips.js的路径',注意也要import css
 
-##vue-tips提供的API
+## vue-tips提供的API
 * center 表示toast需要显示的地方 可以选择bottom,top,center
 * 参数1 提示的消息 | 参数2 消息多少ms后消失 |  参数3 消息消失后的回调函数 | 参数4 {} 可以传自己订制的css
 ```
@@ -14,7 +14,7 @@ this.$toast.center('我是提示框',3000,function(){
     background:"#f63"
 })
 ```
-//参数1 confirm提示的信息 参数2点击确定后的回调函数
+* 参数1 confirm提示的信息 参数2点击确定后的回调函数
 ```
 this.$comfirm('确认删除吗？',function(){
   //todo
@@ -25,6 +25,13 @@ this.$comfirm('确认删除吗？',function(){
 ```
 this.$alert.warning('参数错误','确认',function(){
    //todo
+})
+```
+* 参数1 prompt提示的信息 参数2点击确定后执行的回调函数 回调函数的参数是input输入的值
+
+```
+this.$prompt('请输入姓名',function(val){
+    this.$alert('success',val)
 })
 ```
 
