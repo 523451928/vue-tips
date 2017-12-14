@@ -26,6 +26,23 @@ this.$actionSheet({
 | comfirm | Object text => 确认文字 callback => 点击后的回调函数 当前this指向Vue.extend()的实例|
 | cancel | Object text => 取消文字 |
 
+## $notify 使用方法
+```
+this.$notify({
+  message: '提示信息',
+  style: {
+    background: "#f63"
+  },
+  delay: 3000
+})
+```
+| Option | Description |
+| ----- | ----- |
+| message | String(default '提示信息') 需要显示的提示信息 |
+| style | Object (default {}) 自定义皮肤 |
+| delay | Number (default 3000) 多久后移除提示 单位: ms |
+
+
 ## $confirm 使用方法
 ```
 this.$confirm({
