@@ -22,6 +22,22 @@
    -webkit-transform-origin: 0 0;
    transform-origin: 0 0;
  }
+ .wa-notify{
+   position: fixed;
+   top: 0px;
+   left: 0;
+   width: 100%;
+   height: 40px;
+   line-height: 40px;
+   text-align: center;
+   background: #00a0e9;
+   color: #fff;
+   transition: all .5s;
+   animation: show-notify .5s;
+   -webkit-animation: show-notify .5s;
+   animation-fill-mode: forwards;
+   -webkit-animation-fill-mode: forwards;
+ }
  .action-sheet-mask{
    width: 100%;
    height: 100%;
@@ -445,8 +461,17 @@
          -webkit-transform: scale(1);
      }
  }
- @keyframes show-action
- {
+ @keyframes show-notify {
+   from {
+     opacity: 0;
+     top: -50px;
+   }
+   to {
+     opacity: 1;
+     top: 0;
+   }
+ }
+ @keyframes show-action {
    from {
      opacity: 0;
      bottom: -180px;
