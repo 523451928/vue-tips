@@ -26,28 +26,69 @@ this.$actionSheet({
 | comfirm | Object text => 确认文字 callback => 点击后的回调函数 当前this指向Vue.extend()的实例|
 | cancel | Object text => 取消文字 |
 
+## $confirm 使用方法
+```
+this.$confirm({
+  {
+    title: '请确认',
+    btnArr: [
+      {
+        text: '取消',
+        callback() {
+          console.log('click cancel button')
+        },
+        className: 'cancel'
+      },
+      {
+        text: '确认',
+        callback() {
+          console.log('click comfirm button')
+        },
+        className: 'confirm'
+      }
+    ]
+  }
+})
+```
+| Option | Description |
+| ----- | ----- |
+| title | String(default '') confirm标题 |
+| btnArr | Array 按钮组 text => 按钮文字 callback => 点击按钮后的回调函数 className => 按钮的类名 |
 
 ## $toast 使用方法
 ```
 this.$toast('message')
 ```
+| Option | Description |
+| ----- | ----- |
+| message | String(default '') 提示的信息 |
 
-* warning 表示提示给用户的状态 可以选择 error,warning,success
-* 参数1 alert提示的信息 ,参数2按钮的文字,参数3点击按钮后执行的回调函数
+## $alert 使用方法
 ```
 this.$alert.warning('参数错误','确认',function(){
    //todo
 })
 ```
-* 参数1 prompt提示的信息 参数2点击确定后执行的回调函数 回调函数的参数是input输入的值
+| Option | Description |
+| ----- | ----- |
+| warning | String  表示提示给用户的状态 可以选择 error,warning,success |
+| argu-1 | String alert提示的信息 |
+| argu-2 | String 按钮的文字 |
+| argu-3 | Function 点击后的回调函数 |
 
+## $prompt 使用方法
 ```
 this.$prompt('请输入姓名',function(val){
   //val的值是input里面输入的值
   //todo
 })
 ```
+| Option | Description |
+| ----- | ----- |
+| argu-1 | String  prompt的标题 |
+| argu-2 | Function 点击确认后的回调函数 |
 
+## $loading 使用方法
 * 异步请求显示的loading框
 * 开启loading 参数1 需要提示的信息,参数2 可以传自己订制的css
 ```
