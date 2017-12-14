@@ -67,9 +67,42 @@ Tips.install = function (Vue, options) {
     };
     ['bottom', 'center', 'top'].forEach(function(type) {
         Vue.prototype.$toast[type] = function(tips,duration,callback,themeObj) {
-            return Vue.prototype.$toast(tips,type,duration,callback,themeObj);
-        };
+            return Vue.prototype.$toast(tips,type,duration,callback,themeObj)
+        }
     });
+    Vue.prototype.$notify = function(opt) {
+      let option = {
+        message: 'notify message',
+        style: {},
+        delay: 3000
+      }
+      let notify = document.querySelector('.wa-notify')
+      if (notify) {
+        return
+      }
+      option = extend(opt, option)
+      let notifyTpl = Vue.extend({
+        template: `<div class="wa-notify" ref="notify" :style="option.style">
+                    {{option.message}}
+                  </div>`,
+        data() {
+          return {
+            option
+          }
+        },
+        mounted() {
+          setTimeout(() => {
+            this.$refs.notify.style.transform = 'translateY(-100%)'
+            setTimeout(() => {
+              document.body.removeChild(this.$refs.notify)
+            }, 500)
+          }, this.option.delay)
+        }
+      })
+      let tpl = new notifyTpl().$mount().$el
+      document.body.appendChild(tpl)
+    }
+
     Vue.prototype.$actionSheet = function(opt) {
       let option = {
         title: 'actionSheet',
@@ -353,4 +386,3 @@ Tips.install = function (Vue, options) {
         }
     })
 };
-
