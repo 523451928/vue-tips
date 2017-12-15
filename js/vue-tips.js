@@ -74,7 +74,8 @@ Tips.install = function (Vue, options) {
       let option = {
         message: 'notify message',
         style: {},
-        delay: 3000
+        delay: 3000,
+        autoClose: true
       }
       let notify = document.querySelector('.wa-notify')
       if (notify) {
@@ -90,17 +91,26 @@ Tips.install = function (Vue, options) {
             option
           }
         },
-        mounted() {
-          setTimeout(() => {
+        methods: {
+          close() {
             this.$refs.notify.style.transform = 'translateY(-100%)'
             setTimeout(() => {
               document.body.removeChild(this.$refs.notify)
             }, 500)
-          }, this.option.delay)
+          }
+        },
+        mounted() {
+          if (this.option.autoClose) {
+            setTimeout(() => {
+              this.close()
+            }, this.option.delay)
+          }
         }
       })
-      let tpl = new notifyTpl().$mount().$el
+      let notifyVue = new notifyTpl().$mount()
+      let tpl = notifyVue.$el
       document.body.appendChild(tpl)
+      return notifyVue
     }
 
     Vue.prototype.$actionSheet = function(opt) {
@@ -154,8 +164,10 @@ Tips.install = function (Vue, options) {
           }
         }
       })
-      let tpl = new actionSheetTpl().$mount().$el
+      let actionSheetVue = new actionSheetTpl().$mount()
+      let tpl = actionSheetVue.$el
       document.body.appendChild(tpl)
+      return actionSheetVue
     }
     Vue.prototype.$dialog = function(opt) {
       let option = {
@@ -198,8 +210,10 @@ Tips.install = function (Vue, options) {
           }
         }
       })
-      let tpl = new dialogTpl().$mount().$el
+      let dialogVue = new dialogTpl().$mount()
+      let tpl = dialogVue.$el
       document.body.appendChild(tpl)
+      return dialogVue
     }
     Vue.prototype.$alert = function(type,title,btnText,callback){
         if(!btnText){
@@ -222,7 +236,7 @@ Tips.install = function (Vue, options) {
                 }
             },
             methods:{
-                confirmFn(){
+                confirmFn() {
                     if (typeof callback == "function") {
                         callback.apply(this)
                     }
@@ -386,3 +400,4 @@ Tips.install = function (Vue, options) {
         }
     })
 };
+Vue.use(Tips)
