@@ -28,20 +28,25 @@ this.$actionSheet({
 
 ## $notify 使用方法
 ```
-this.$notify({
+let notify = this.$notify({
   message: '提示信息',
   style: {
     background: "#f63"
   },
-  delay: 3000
+  delay: 3000,
+  autoClose: true
 })
+setTimeout(() => {
+  notify.close()
+}, 3000)
+返回值为notify的实例 可以使用notify的方法
 ```
 | Option | Description |
 | ----- | ----- |
 | message | String(default '提示信息') 需要显示的提示信息 |
-| style | Object (default {}) 自定义皮肤 |
-| delay | Number (default 3000) 多久后移除提示 单位: ms |
-
+| style | Object(default {}) 自定义皮肤 |
+| delay | Number(default 3000) 多久后移除提示 单位: ms |
+| autoClose | Bollean(default true) 是否自动关闭 | 
 
 ## $confirm 使用方法
 ```
