@@ -123,6 +123,9 @@ Tips.install = function (Vue, options) {
             this.close()
           }
         },
+        selectArr: [
+
+        ],
         cancel: {
           text: 'canceltext'
         }
@@ -133,7 +136,8 @@ Tips.install = function (Vue, options) {
         template: `<div class="action-sheet-mask" ref="wrapper" @click="cancelFn(false)">
                     <div class="action-sheet-content" ref="content" @click.stop>
                       <div class="action-title scale-1px">{{title}}</div>
-                      <div class="action-confirm" @click="comfirmFn">{{comfirm.text}}</div>
+                      <div v-if="selectArr.length == 0" class="action-confirm" @click="comfirmFn">{{comfirm.text}}</div>
+                      <div v-else class="scale-1px" :class="item.className" v-for="(item, index) in selectArr" @click="callback(item.callback)">{{item.text}}</div>
                       <div class="action-cancel" @click="cancelFn(true)">{{cancel.text}}</div>
                     </div>
                   </div>`,
@@ -141,12 +145,16 @@ Tips.install = function (Vue, options) {
           return {
             title: option.title,
             comfirm: option.comfirm,
-            cancel: option.cancel
+            cancel: option.cancel,
+            selectArr: option.selectArr
           }
         },
         methods: {
           comfirmFn() {
             this.comfirm.callback.apply(this)
+          },
+          callback(fn) {
+            fn.apply(this)
           },
           cancelFn(flag) {
             if (this.cancel.callback && flag) {
