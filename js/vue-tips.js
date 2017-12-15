@@ -404,7 +404,60 @@ Tips.install = function (Vue, options) {
 
     Vue.directive('drag', {     //添加全局指令
         bind (el, binding, vnode, oldVnode) {
-
+          let distance = binding.value
+          let touchObj = {}
+          el.addEventListener('touchstart', startFn, false)
+          el.addEventListener('touchmove', moveFn, false)
+          el.addEventListener('touchend', endFn, false)
+          function startFn(e) {
+            el.style.transition = 'none'
+            touchObj.isStart = true
+            touchObj.startX = e.touches[0].clientX
+          }
+          function moveFn(e) {
+            if (touchObj.isStart) {
+              let moveX = e.touches[0].clientX
+              if (touchObj.endX > 0) {
+                touchObj.disX = moveX - touchObj.startX - distance
+                if (touchObj.disX < -distance) {
+                  return
+                }
+                if (touchObj.disX > 20) {
+                  touchObj.disX = 0
+                }
+              } else {
+                touchObj.disX = moveX - touchObj.startX
+                if (touchObj.disX > 20) {
+                  return
+                }
+                if (touchObj.disX < -distance) {
+                  touchObj.disX = -distance
+                }
+              }
+              el.style['transform'] = `translate(${touchObj.disX}px,0px)`
+            }
+          }
+          function endFn (e) {
+            el.style.transition = 'all .3s'
+            if (touchObj.endX) {
+              if (touchObj.disX > -50) {
+                el.style['transform'] = 'translate(0px,0px)'
+                touchObj.endX = 0
+              } else {
+                el.style['transform'] = `translate(-${distance}px,0px)`
+                touchObj.endX = distance
+              }
+            } else {
+              if (touchObj.disX < -30) {
+                el.style['transform'] = `translate(-${distance}px,0px)`
+                touchObj.endX = distance
+              } else {
+                el.style['transform'] = 'translate(0px,0px)'
+                touchObj.endX = 0
+              }
+            }
+            touchObj.isStart = false
+          }
         }
     })
 };
