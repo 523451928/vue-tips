@@ -9,7 +9,8 @@
 <div v-drag='80'>拖拽我</div>
 ```
 | Option | Descption |
-| 80 | Number 向左拖拽的最大值 |
+| -----  |  -----  |
+| 80    | Number 向左拖拽的最大值 |
 ## $actionSheet 使用方法
 ```
 this.$actionSheet({
