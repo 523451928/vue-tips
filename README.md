@@ -1,8 +1,15 @@
 # vue-tips
-基于vue2.0以上的vue一个移动端提示插件,包括confirm,alert,toast,loading的一些提示
+基于vue2.0以上的vue一个移动端提示插件,包括confirm,alert,toast,loading的一些提示以及移动端拖拽指令
 ## 使用方法 
 * 1、直接引用vue-tips.js和css,入口文件加上Vue使用插件的api,Vue.use(Tips)
 * 2、在使用vue-cli的项目中使用vue-tips需要在vue-tips.js使用export default Tips 导出Tips,最后在入口js中import Tips from 'vue-tips.js的路径',注意也要import css
+
+## v-drag 使用方法
+```
+<div v-drag='80'>拖拽我</div>
+```
+| Option | Descption |
+| 80 | Number 向左拖拽的最大值 |
 ## $actionSheet 使用方法
 ```
 this.$actionSheet({
