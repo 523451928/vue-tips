@@ -56,30 +56,26 @@
    text-align: center;
    transition: all .5s;
    font-size: 14px;
-   height: 160px;
+   min-height: 160px;
    animation: show-action .5s;
    -webkit-animation: show-action .5s;
    -webkit-animation-fill-mode: forwards;
  }
- .action-sheet-content .action-title{
+ .action-sheet-content div{
+   background: #ffffff;
    height: 50px;
    line-height: 50px;
+ }
+ .action-sheet-content .action-title{
    color: #ccc;
-   background: #ffffff;
    font-size: 12px;
  }
  .action-sheet-content .action-confirm{
    color: #fa1d1f;
-   background: #ffffff;
-   height: 50px;
-   line-height: 50px;
-   margin-bottom: 10px;
  }
  .action-sheet-content .action-cancel{
    color: #111;
-   background: #ffffff;
-   height: 50px;
-   line-height: 50px;
+   margin-top: 10px;
  }
  .wa-tips-mask{
    width: 100%;
@@ -106,8 +102,9 @@
  }
  .wa-tips-mask .tips-container .tips-title{
    width: 100%;
-   line-height: .4rem;
+   line-height: .36rem;
    text-align: center;
+   margin-top: .1rem;
    font-size: 17px;
    color: #565A5C;
  }
@@ -133,7 +130,7 @@
    color: #f05950;
  }
  .wa-tips-mask .tips-container .tips-btn-group{
-   margin-top: .2rem;
+   margin-top: .16rem;
    text-align: center;
  }
  .wa-tips-mask .tips-container .tips-btn-group span{
