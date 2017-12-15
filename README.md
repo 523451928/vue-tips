@@ -18,6 +18,7 @@ this.$actionSheet({
     text: 'canceltext'
   }
 })
+//返回值为actionSheet的实例 可以使用actionSheet的方法
 ```
 | Option | Description |
 | ----- | ----- |
@@ -39,7 +40,7 @@ let notify = this.$notify({
 setTimeout(() => {
   notify.close()
 }, 3000)
-返回值为notify的实例 可以使用notify的方法
+//返回值为notify的实例 可以使用notify的方法
 ```
 | Option | Description |
 | ----- | ----- |
