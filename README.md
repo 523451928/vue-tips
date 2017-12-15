@@ -16,7 +16,14 @@ this.$actionSheet({
   },
   cancel: {
     text: 'canceltext'
-  }
+  },
+  selectArr: [
+    {
+      text: '删除',
+      callback() { //todo },
+      className: 'class-name'
+    }
+  ]
 })
 //返回值为actionSheet的实例 可以使用actionSheet的方法
 ```
@@ -26,6 +33,10 @@ this.$actionSheet({
 | maskClose | Boolean(defualt true) 点击遮罩是否能关闭 |
 | comfirm | Object text => 确认文字 callback => 点击后的回调函数 当前this指向Vue.extend()的实例|
 | cancel | Object text => 取消文字 |
+| selectArr | Arrar(default []) 支持传一个选项数组 有该选项会忽略comfirm |
+| selectArr => text | String 选项文字 |
+| selectArr => callback | Function 回调函数 |
+| selectArr => className | String 选项类名 |
 
 ## $notify 使用方法
 ```
