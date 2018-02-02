@@ -404,23 +404,55 @@ Tips.install = function (Vue, options) {
 
     Vue.directive('drag', {     //添加全局指令
         bind (el, binding, vnode, oldVnode) {
-          let distance = binding.value
+          let distance = el.getAttribute('drag-distance')
+          let trrigerDistance = el.getAttribute('drag-trigger-distance')
+          let cartId = el.getAttribute('id')
+          let index = el.getAttribute('index')
+          let expression = binding.value
+          let delBtn = el.querySelector('.del-item')
+          let className = `.${el.classList[0]}`
           let touchObj = {}
           el.addEventListener('touchstart', startFn, false)
           el.addEventListener('touchmove', moveFn, false)
           el.addEventListener('touchend', endFn, false)
           function startFn(e) {
+            let allDom = document.querySelectorAll(className)
+            allDom.forEach((dom) => {
+              if (dom!==el) {
+                dom.style['transform'] = 'translate(0px,0px)'
+              }
+            })
+            if (el.style['transform'] == 'translate(0px, 0px)') {
+              touchObj.endX = null
+            }
+            touchObj.lastEl = el
             el.style.transition = 'none'
             touchObj.isStart = true
             touchObj.startX = e.touches[0].clientX
+            touchObj.startY = e.touches[0].clientY
+            touchObj.isFirst = true
+            touchObj.disX = null
           }
-          function moveFn(e) {
-            if (touchObj.isStart) {
-              let moveX = e.touches[0].clientX
+          function moveFn(e){
+            let moveX = e.touches[0].clientX
+            let moveY = e.touches[0].clientY
+            let direction = getSlideDirection(touchObj.startX, touchObj.startY, moveX, moveY)
+            if (touchObj.isStart && direction != 1 && direction != 2) {
+              e.preventDefault()
               if (touchObj.endX > 0) {
                 touchObj.disX = moveX - touchObj.startX - distance
                 if (touchObj.disX < -distance) {
-                  return
+                  delBtn.style.transition = ''
+                  delBtn.style.width = -touchObj.disX + 'px'
+                  delBtn.style.right = touchObj.disX + 1 + 'px'
+                  if (touchObj.disX < -trrigerDistance) {
+                    if (touchObj.isFirst) {
+                      // expression({Id:cartId}, index, true)
+                      el.style['transform'] = 'translate(0px,0px)'
+                    }
+                    touchObj.isFirst = false
+                  }
+                  // return
                 }
                 if (touchObj.disX > 20) {
                   touchObj.disX = 0
@@ -437,10 +469,10 @@ Tips.install = function (Vue, options) {
               el.style['transform'] = `translate(${touchObj.disX}px,0px)`
             }
           }
-          function endFn (e) {
+          function endFn (e){
             el.style.transition = 'all .3s'
             if (touchObj.endX) {
-              if (touchObj.disX > -50) {
+              if (touchObj.disX > -50 && touchObj.disX || touchObj.disX === 0 || !touchObj.disX) {
                 el.style['transform'] = 'translate(0px,0px)'
                 touchObj.endX = 0
               } else {
@@ -456,6 +488,9 @@ Tips.install = function (Vue, options) {
                 touchObj.endX = 0
               }
             }
+            delBtn.style.right = -parseInt(distance) - 1 + 'px'
+            delBtn.style.transition = 'all .3s'
+            delBtn.style.width = distance + 'px'
             touchObj.isStart = false
           }
         }
