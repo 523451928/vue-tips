@@ -70,6 +70,60 @@ Tips.install = function (Vue, options) {
             return Vue.prototype.$toast(tips,type,duration,callback,themeObj)
         }
     });
+    Vue.prototype.$tip = function(opt) {
+      let option = {
+        message: 'tips message',
+        style: {},
+        triangleDirection: 'left',
+        closeFn: null
+      }
+      option = extend(opt, option)
+      let tipTpl = Vue.extend({
+        template: `<div class="tips-wrapper" :style="option.style" ref="tips">
+                    <span v-if="option.triangleDirection==='left'" class="triangle triangle-left"></span>
+                    <span v-if="option.triangleDirection==='top'" class="triangle triangle-top"></span>
+                    <span v-if="option.triangleDirection==='right'" class="triangle triangle-right"></span>
+                    <span v-if="option.triangleDirection==='bottom'" class="triangle triangle-bottom"></span>
+                    {{option.message}}<span class="wa-close" @click="close"></span>
+                  </div>`,
+        data() {
+          return {
+            option
+          }
+        },
+        methods: {
+          close() {
+            switch (this.option.triangleDirection) {
+              case 'left':
+                this.$refs.tips.style.transform = 'translateX(-100%)'
+                break;
+              case 'right':
+                this.$refs.tips.style.transform = 'translateX(100%)'
+                break;
+              case 'top':
+                this.$refs.tips.style.transform = 'translateY(100%)'
+                break;
+              case 'bottom':
+                this.$refs.tips.style.bottom = '0'
+                break;
+            }
+            setTimeout(() => {
+              if (this.$refs.tips) {
+                document.body.removeChild(this.$refs.tips)
+              }
+            }, 200)
+            if (this.option.closeFn) {
+              // this.option.closeFn.call(this)
+              this.option.closeFn()
+            }
+          }
+        }
+      })
+      let tipVue = new tipTpl().$mount()
+      let tpl = tipVue.$el
+      document.body.appendChild(tpl)
+      return tipVue
+    }
     Vue.prototype.$notify = function(opt) {
       let option = {
         message: 'notify message',
@@ -211,7 +265,7 @@ Tips.install = function (Vue, options) {
             this.$refs.wrapper.style.opacity=0
             setTimeout(() => {
               document.body.removeChild(this.$refs.wrapper)
-            }, 1000)
+            }, 300)
           },
           callback(fn) {
             fn.apply(this)
@@ -401,8 +455,65 @@ Tips.install = function (Vue, options) {
             return Vue.prototype.$loading(tips,type,theme);
         };
     });
-
-    Vue.directive('drag', {     //添加全局指令
+    function GetSlideAngle(dx, dy) {
+      return Math.atan2(dy, dx) * 180 / Math.PI
+    }
+    // 根据起点和终点返回方向 1：向上，2：向下，3：向左，4：向右,0：未滑动
+    function getSlideDirection(startX, startY, endX, endY) {
+      let dy = startY - endY
+      let dx = endX - startX
+      let result = 0
+      // 如果滑动距离太短
+      if (Math.abs(dx) < 2 && Math.abs(dy) < 2) {
+        // return result
+      }
+      let angle = GetSlideAngle(dx, dy)
+      if (angle >= -45 && angle < 45) {
+        result = 4
+      } else if (angle >= 45 && angle < 135) {
+        result = 1
+      } else if (angle >= -135 && angle < -45) {
+        result = 2
+      } else if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
+        result = 3
+      }
+      return result
+    }
+    Vue.directive('slide', {  //仿iOS侧滑返回
+      bind(el, binding) {
+        let expression = binding.value
+        let distance = el.getAttribute('slide-distance') || 50
+        let touchObj = {}
+        el.addEventListener('touchstart', startFn, false)
+        el.addEventListener('touchmove', moveFn, false)
+        el.addEventListener('touchend', endFn, false)
+        function startFn(e) {
+          el.style.transition = 'none'
+          touchObj.isStart = true
+          touchObj.startX = e.touches[0].clientX
+          touchObj.startY = e.touches[0].clientY
+        }
+        function moveFn(e) {
+          let moveX = e.touches[0].clientX
+          let moveY = e.touches[0].clientY
+          let direction = getSlideDirection(touchObj.startX, touchObj.startY, moveX, moveY)
+          touchObj.disX = moveX - touchObj.startX
+          if (touchObj.isStart && direction != 1 && direction != 2 && touchObj.disX > 0) {
+            el.style['transform'] = `translate(${touchObj.disX}px,0px)`
+          }
+        }
+        function endFn(e) {
+          touchObj.isStart = false
+          el.style.transition = 'all .3s'
+          if (touchObj.disX > distance) {
+            expression()
+          } else {
+            el.style['transform'] = 'translate(0px,0px)'
+          }
+        }
+      }
+    })
+    Vue.directive('drag', {     //添加全局指令 侧滑删除
         bind (el, binding, vnode, oldVnode) {
           let distance = el.getAttribute('drag-distance')
           let trrigerDistance = el.getAttribute('drag-trigger-distance')
@@ -416,16 +527,15 @@ Tips.install = function (Vue, options) {
           el.addEventListener('touchmove', moveFn, false)
           el.addEventListener('touchend', endFn, false)
           function startFn(e) {
-            let allDom = document.querySelectorAll(className)
-            allDom.forEach((dom) => {
-              if (dom!==el) {
-                dom.style['transform'] = 'translate(0px,0px)'
-              }
-            })
-            if (el.style['transform'] == 'translate(0px, 0px)') {
-              touchObj.endX = null
-            }
-            touchObj.lastEl = el
+            // let allDom = document.querySelectorAll(className)
+            // allDom.forEach((dom) => {
+            //   if (dom!==el) {
+            //     dom.style['transform'] = 'translate(0px,0px)'
+            //   }
+            // })
+            // if (el.style['transform'] == 'translate(0px, 0px)') {
+            //   touchObj.endX = null
+            // }
             el.style.transition = 'none'
             touchObj.isStart = true
             touchObj.startX = e.touches[0].clientX
