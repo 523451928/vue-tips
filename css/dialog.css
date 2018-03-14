@@ -5,6 +5,54 @@
  /*.layer span{display:inline-block;width:2.80rem;height:0.88rem;font-size: 0.36rem;text-align: center;line-height:0.88rem;}*/
  /*.layer #cancel{width: 49%; text-align: center;height: 0.98rem; display:inline-block; line-height:0.98rem; color:#FF6633; float: left;}*/
  /*.layer #sure{width: 49%; text-align: center;height: 0.98rem; display:inline-block; line-height:0.98rem; color:#3377cc;border-left:1px solid #bcbcbc; float: left;}*/
+ .tips-wrapper .wa-close{
+   font-size: 12px;
+   margin-left: 14px;
+ }
+ .tips-wrapper .triangle{
+   position: absolute;
+   display: inline-block;
+   width: 0;
+   height: 0;
+   line-height: 0;
+   border: 6px solid transparent;
+   border-top-width: 0;
+   border-bottom-color: rgba(0, 0, 0, 0.8);
+ }
+ .tips-wrapper .triangle-top{
+   left: 50%;
+   margin-left: -3px;
+   top: -6px;
+ }
+ .tips-wrapper .triangle-bottom{
+   left: 50%;
+   margin-left: -3px;
+   bottom: -6px;
+   transform: rotate(180deg);
+ }
+ .tips-wrapper .triangle-left{
+   transform: rotate(-90deg);
+   left: -8px;
+   top: 50%;
+   margin-top: -4px;
+ }
+ .tips-wrapper .triangle-right{
+   transform: rotate(90deg);
+   right: -8px;
+   top: 50%;
+   margin-top: -4px;
+ }
+ .tips-wrapper{
+   position: fixed;
+   z-index: 10000;
+   background: rgba(0,0,0,0.8);
+   padding: 14px;
+   color: #fff;
+   border-radius: 4px;
+   left: 100px;
+   transition: all .3s;
+   animation: show-tips .3s;
+ }
  .scale-1px{
    position: relative;
    border:none;
@@ -136,10 +184,11 @@
  .wa-tips-mask .tips-container .tips-btn-group span{
    text-align: center;
    display: inline-block;
-   width: 1.2rem;
+   /*width: 1.2rem;*/
+   padding:0 .36rem;
    cursor: pointer;
    height: .32rem;
-   line-height: .32rem;
+   line-height: .3rem;
    border-radius: 2px;
    box-sizing: border-box;
    font-size: 14px;
@@ -151,6 +200,7 @@
  }
  .wa-tips-mask .tips-container .tips-btn-group .use-btn{
    background: #f05950;
+   border: 1px solid #f05950;
    color: #ffffff;
  }
  .wa-tips-mask .tips-container .tips-btn-group .confirm-btn{
@@ -164,9 +214,9 @@
     font-size:14px;
     color: #fff;
     border-radius: 5px;
-    background: rgba(0,0,0,0.7);
-    animation: show-dialog .5s;
-    -webkit-animation: show-dialog .5s;
+    background: rgba(0,0,0,0.6);
+    animation: show-dialog .3s;
+    -webkit-animation: show-dialog .3s;
     overflow: hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
@@ -220,8 +270,8 @@
 .loading_leaf:before {
     content: " ";
     position: absolute;
-    width: 9.14px;
-    height: 3.08px;
+    width: 8.14px;
+    height: 2.08px;
     background: #d1d1d5;
     box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px;
     border-radius: 1px;
@@ -458,6 +508,14 @@
          -webkit-transform: scale(1);
      }
  }
+ @keyframes show-tips {
+   from {
+     opacity: 0;
+   }
+   to {
+     opacity: 1;
+   }
+ }
  @keyframes show-notify {
    from {
      opacity: 0;
@@ -492,13 +550,13 @@
  {
    from {
      opacity: 0;
-     transform: translateY(-10px);
-     -webkit-transform: translateY(-10px);
+     /*transform: translateY(-10px);*/
+     /*-webkit-transform: translateY(-10px);*/
    }
    to {
      opacity: 1;
-     transform: translateY(0);
-     -webkit-transform: translateY(0);
+     /*transform: translateY(0);*/
+     /*-webkit-transform: translateY(0);*/
    }
  }
 
